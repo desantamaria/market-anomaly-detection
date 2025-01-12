@@ -31,5 +31,10 @@ def get_market_data():
     
     json_data = df.to_json()
     json_data = json.loads(json_data)
-    
+        
     return json_data
+
+@app.post("/api/py/getPrediction")
+def get_prediction(financial_data):
+    print(financial_data)
+    return {"PREDICTION"}
