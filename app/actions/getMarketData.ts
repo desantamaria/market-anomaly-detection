@@ -30,6 +30,7 @@ export async function getMarketData() {
 }
 
 export type FinancialData = {
+  Date: string;
   DXY: number;
   GBP: number;
   JPY: number;
@@ -53,6 +54,14 @@ export async function getPrediction(financialData: FinancialData) {
       },
       body: JSON.stringify(financialData),
     });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error with status: ${response.status}`);
+    }
+    const data = await response.json();
+    return data;
+
+    return;
   } catch (error) {
     return {
       success: false,

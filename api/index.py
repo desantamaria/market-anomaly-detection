@@ -35,8 +35,15 @@ def get_market_data():
         ticker: [{'date': date, 'price': price, 'MA': ma} for date, price, ma in zip(df['Date'], df[ticker], df[f'{ticker}_MA'])]
         for ticker in ticker_list
     }
+    
+    dates = {
+    'dates': [date for date in df['Date']]
+}
+
+    # Combine both dictionaries
+    result = {**json_data, **dates}
         
-    return json_data
+    return result
 
 @app.post("/api/py/getPrediction")
 def get_prediction(financial_data):
