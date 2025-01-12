@@ -24,13 +24,17 @@ def get_market_data():
     
     df = df[['Close']].droplevel(level=0, axis=1)
     
+    df = df.dropna()
     for ticker in ticker_list:
         df = createMA(df, 12, ticker)
-        
     df = df.dropna()
     
-    json_data = df.to_json()
-    json_data = json.loads(json_data)
+    df = df.reset_index()
+    
+    json_data = {
+        ticker: [{'date': date, 'price': price, 'MA': ma} for date, price, ma in zip(df['Date'], df[ticker], df[f'{ticker}_MA'])]
+        for ticker in ticker_list
+    }
         
     return json_data
 

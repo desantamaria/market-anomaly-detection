@@ -12,6 +12,7 @@ export default function Home() {
   async function fetchMarketData() {
     const result = await getMarketData();
     setYFinanceData(result);
+    console.log(result);
   }
 
   useEffect(() => {
