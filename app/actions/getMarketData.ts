@@ -1,5 +1,7 @@
 "use server";
 
+import { PredictionData } from "../page";
+
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 const RENDER_URL = process.env.NEXT_PUBLIC_RENDER_URL || "";
 
@@ -29,23 +31,7 @@ export async function getMarketData() {
   }
 }
 
-export type FinancialData = {
-  Date: string;
-  DXY: number;
-  GBP: number;
-  JPY: number;
-  MXCN: number;
-  MXEU: number;
-  VIX: number;
-  VIX_MA: number;
-  DXY_MA: number;
-  JPY_MA: number;
-  GBP_MA: number;
-  MXEU_MA: number;
-  MXCN_MA: number;
-};
-
-export async function getPrediction(financialData: FinancialData) {
+export async function getPrediction(financialData: PredictionData) {
   try {
     const response = await fetch(`${RENDER_URL}`, {
       method: "POST",

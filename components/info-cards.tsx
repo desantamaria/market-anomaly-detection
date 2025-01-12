@@ -1,7 +1,5 @@
 "use client";
 
-import { PredictionData } from "@/app/page";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useState } from "react";
 
@@ -23,7 +21,7 @@ interface FinancialData {
 export function InfoCards({ date }: { date: string }) {
   const [data, setData] = useState<FinancialData | null>(null);
 
-  if (!data) return <div>Loading...</div>;
+  if (!data) return <></>;
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">

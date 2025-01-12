@@ -5,6 +5,7 @@ import { getMarketData, getPrediction } from "./actions/getMarketData";
 import { DateSelector } from "@/components/date-selector";
 import { InfoCards } from "@/components/info-cards";
 import { Button } from "@/components/ui/button";
+import { GenerateResponse } from "./actions/generate";
 
 interface Ticker {
   date: string;
@@ -12,7 +13,7 @@ interface Ticker {
   MA: number;
 }
 
-interface FinancialData {
+export interface FinancialData {
   DXY: Ticker[];
   GBP: Ticker[];
   JPY: Ticker[];
@@ -38,6 +39,15 @@ export interface PredictionData {
   MXCN_MA: number;
 }
 
+export interface PredictionResult {
+  prediction: {
+    XGBoost: number;
+    "Logistic Regression": number;
+    "Isolation Forest": number;
+  };
+  probability: { XGBoost: number };
+}
+
 export default function Home() {
   const [yFinanceData, setYFinanceData] = useState<FinancialData | null>(null);
   const [selectedDate, setSelectedDate] = useState<string | null>(null);
@@ -46,7 +56,6 @@ export default function Home() {
 
   async function fetchMarketData() {
     const result = await getMarketData();
-    console.log(result);
     setYFinanceData(result);
   }
 
@@ -106,12 +115,12 @@ export default function Home() {
     console.log(formattedPrediction);
 
     const result = await getPrediction(formattedPrediction);
+    setPredictionResults(result);
     console.log(result);
 
-    // TODO: Implement API call to analysis service
-    // setPredictionResults();
-    // TODO: Implement API call to insight generation service
-    // setPredictionAnalysis();
+    const analysis = await GenerateResponse(yFinanceData, selectedDate, result);
+
+    setPredictionAnalysis(analysis);
   };
 
   if (!yFinanceData) return <></>;
@@ -130,7 +139,7 @@ export default function Home() {
           {selectedDate && (
             <>
               <InfoCards date={selectedDate} />
-              <Button onClick={() => handlePredict()} className="col-span-full">
+              <Button onClick={handlePredict} className="col-span-full">
                 Predict Anomaly
               </Button>
             </>
