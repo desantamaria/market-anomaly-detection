@@ -1,5 +1,4 @@
 "use server";
-
 import { PredictionData } from "../page";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
@@ -7,33 +6,32 @@ const RENDER_URL = process.env.NEXT_PUBLIC_RENDER_URL || "";
 
 export async function getMarketData() {
   try {
-    const response = await fetch(`${API_URL}/api/py/getMarketData`, {
+    const url = new URL("/api/py/getMarketData", API_URL).toString();
+
+    const response = await fetch(url, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
+      cache: "no-store",
     });
 
     if (!response.ok) {
+      console.error(`API Error: ${response.status} - ${response.statusText}`);
       throw new Error(`HTTP error with status: ${response.status}`);
     }
+
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("Server Error:", error);
-    return {
-      success: false,
-      error:
-        error instanceof Error
-          ? error.message
-          : "Failed to fetching market data",
-    };
+    console.error("Market Data Error:", error);
+    throw error;
   }
 }
 
 export async function getPrediction(financialData: PredictionData) {
   try {
-    const response = await fetch(`${RENDER_URL}`, {
+    const response = await fetch(RENDER_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -42,17 +40,15 @@ export async function getPrediction(financialData: PredictionData) {
     });
 
     if (!response.ok) {
+      console.error(
+        `Prediction API Error: ${response.status} - ${response.statusText}`
+      );
       throw new Error(`HTTP error with status: ${response.status}`);
     }
-    const data = await response.json();
-    return data;
 
-    return;
+    return await response.json();
   } catch (error) {
-    return {
-      success: false,
-      error:
-        error instanceof Error ? error.message : "Failed to fetch prediction",
-    };
+    console.error("Prediction Error:", error);
+    throw error;
   }
 }
