@@ -7,6 +7,8 @@ import { InfoCards } from "@/components/info-cards";
 import { Button } from "@/components/ui/button";
 import { GenerateResponse } from "./actions/generate";
 import Markdown from "react-markdown";
+import { PredictionResults } from "@/components/prediction-results";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface Ticker {
   date: string;
@@ -134,7 +136,7 @@ export default function Home() {
 
           {loading ? (
             <>
-              <div role="status" className="flex justify-center">
+              <div role="status" className="flex justify-center mt-10 my-10">
                 <svg
                   aria-hidden="true"
                   className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-white"
@@ -156,14 +158,22 @@ export default function Home() {
             </>
           ) : (
             <div className="flex flex-col gap-6 mt-5">
-              {predictionResults && <></>}
+              {predictionResults && (
+                <PredictionResults results={predictionResults} />
+              )}
               {predictionAnalysis && (
-                <>
-                  <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
-                    Prediction Analysis
-                  </h3>
-                  <Markdown>{predictionAnalysis}</Markdown>
-                </>
+                <Card>
+                  <CardHeader>
+                    <CardTitle>
+                      <h3 className="scroll-m-20 text-2xl font-semibold tracking-tight">
+                        Prediction Analysis
+                      </h3>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Markdown>{predictionAnalysis}</Markdown>
+                  </CardContent>
+                </Card>
               )}
             </div>
           )}
