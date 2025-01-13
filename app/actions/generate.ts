@@ -4,7 +4,7 @@ import { FinancialData, PredictionData } from "../page";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 export async function GenerateResponse(
-  yFinanceData: FinancialData,
+  yFinanceData: PredictionData,
   selectedDate: string,
   predictionResults: PredictionData
 ): Promise<any> {

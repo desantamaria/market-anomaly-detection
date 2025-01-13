@@ -100,12 +100,10 @@ export default function Home() {
     if (!stocksInfo || !yFinanceData || !selectedDate) return;
 
     setLoading(true);
-
     const result = await getPrediction(stocksInfo);
     setPredictionResults(result);
-    console.log(result);
 
-    const analysis = await GenerateResponse(yFinanceData, selectedDate, result);
+    const analysis = await GenerateResponse(stocksInfo, selectedDate, result);
 
     setPredictionAnalysis(analysis.result);
 
@@ -171,7 +169,9 @@ export default function Home() {
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
-                    <Markdown>{predictionAnalysis}</Markdown>
+                    <div className="flex flex-col gap-7">
+                      <Markdown>{predictionAnalysis}</Markdown>
+                    </div>
                   </CardContent>
                 </Card>
               )}

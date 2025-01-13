@@ -8,10 +8,12 @@ export async function POST(request: Request) {
       await request.json();
 
     const userPrompt = `
-        <FINANCE_DATA> ${yFinanceData}</FINANCE_DATA> 
         <SELECTED_DATE>${selectedDate}</SELECTED_DATE>
-        <LLM_PREDICTION>${predictionResults}</LLM_PREDICTION>
+        <LLM_PREDICTION>${JSON.stringify(predictionResults)}</LLM_PREDICTION>
+        <FINANCE_DATA> ${JSON.stringify(yFinanceData)}</FINANCE_DATA> 
     `;
+
+    console.log(userPrompt);
 
     // Prepare for GROQ
     const messages: Message[] = [

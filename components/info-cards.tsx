@@ -9,7 +9,6 @@ interface TickerData {
 }
 
 export function InfoCards({ stockInfo }: { stockInfo: Record<string, any> }) {
-  console.log(stockInfo);
   const date = stockInfo.Date;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-4">
@@ -18,7 +17,6 @@ export function InfoCards({ stockInfo }: { stockInfo: Record<string, any> }) {
         .map(([ticker, price]) => {
           const maKey = `${ticker}_MA`;
           const maValue = stockInfo[maKey];
-          console.log({ ticker, price, maValue });
 
           return (
             <Card key={ticker}>
