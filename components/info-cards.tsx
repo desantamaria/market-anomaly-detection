@@ -1,6 +1,5 @@
 "use client";
 
-import { FinancialData, PredictionData } from "@/app/page";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 interface TickerData {
