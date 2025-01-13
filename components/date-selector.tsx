@@ -1,6 +1,5 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -23,11 +22,14 @@ export function DateSelector({
           <SelectValue placeholder="Select a date" />
         </SelectTrigger>
         <SelectContent>
-          {dates.map((date) => (
-            <SelectItem key={date} value={date}>
-              {date}
-            </SelectItem>
-          ))}
+          {dates
+            .slice()
+            .reverse()
+            .map((date) => (
+              <SelectItem key={date} value={date}>
+                {new Date(date).toLocaleDateString()}
+              </SelectItem>
+            ))}
         </SelectContent>
       </Select>
     </div>

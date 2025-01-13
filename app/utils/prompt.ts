@@ -58,6 +58,7 @@ Provide specific recommendations across three timeframes:
 - Position management guidelines
 
 Your response should be clear, concise, and actionable, always maintaining a professional tone while acknowledging the inherent uncertainties in financial markets. Use quantitative data to support your analysis but express conclusions in clear, practical terms that can be implemented by portfolio managers.
+Limit the response to at most 2 paragraphs.
 
 Note: All investment recommendations should consider the following principles:
 - Risk management is paramount
