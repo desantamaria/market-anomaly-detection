@@ -1,5 +1,4 @@
 "use server";
-import { PredictionData } from "../page";
 
 export async function getMarketData() {
   try {
