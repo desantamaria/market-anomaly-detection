@@ -22,17 +22,26 @@ export async function GenerateResponse(
     });
 
     if (!response.ok) {
-      throw new Error(`HTTP error with status: ${response.status}`);
+      const errorText = await response.text();
+      console.error("Generate API error:", {
+        status: response.status,
+        statusText: response.statusText,
+        errorText,
+      });
+      throw new Error(
+        `HTTP error with status: ${response.status} - ${errorText}`
+      );
     }
-    const data = await response.json();
-    return data;
 
-    return;
+    const data = await response.json();
+    if (!data.result) {
+      console.error("Generate API returned no result:", data);
+      throw new Error("No result in response");
+    }
+
+    return data;
   } catch (error) {
-    return {
-      success: false,
-      error:
-        error instanceof Error ? error.message : "Failed to generate response",
-    };
+    console.error("Generate Response error:", error);
+    throw error;
   }
 }

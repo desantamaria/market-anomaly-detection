@@ -60,16 +60,21 @@ export default function Home() {
     if (!stocksInfo || !yFinanceData || !selectedDate) return;
 
     setLoading(true);
-    const result = await getPrediction(stocksInfo);
-    setPredictionResults(result);
+    try {
+      const result = await getPrediction(stocksInfo);
+      console.log("Prediction result:", result);
+      setPredictionResults(result);
 
-    const analysis = await GenerateResponse(stocksInfo, selectedDate, result);
+      const analysis = await GenerateResponse(stocksInfo, selectedDate, result);
+      console.log("Analysis response:", analysis);
+      console.log("Analysis result:", analysis.result);
 
-    console.log(analysis.result);
-
-    setPredictionAnalysis(analysis.result);
-
-    setLoading(false);
+      setPredictionAnalysis(analysis.result);
+    } catch (error) {
+      console.error("Prediction error:", error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!yFinanceData) return <></>;
