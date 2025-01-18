@@ -1,16 +1,14 @@
 "use server";
 import { PredictionData } from "../page";
 
-// Use relative URL in production
 export async function getMarketData() {
   try {
-    const url =
-      process.env.NODE_ENV === "development"
-        ? new URL(
-            "/api/py/getMarketData",
-            process.env.NEXT_PUBLIC_API_URL
-          ).toString()
-        : "/api/py/getMarketData";
+    // Get the base URL from the environment or construct it for production
+    const baseUrl = process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
+
+    const url = new URL("/api/py/getMarketData", baseUrl).toString();
 
     const response = await fetch(url, {
       method: "GET",
@@ -32,7 +30,6 @@ export async function getMarketData() {
     throw error;
   }
 }
-
 const RENDER_URL = process.env.NEXT_PUBLIC_RENDER_URL || "";
 
 export async function getPrediction(financialData: PredictionData) {
