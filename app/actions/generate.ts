@@ -1,6 +1,6 @@
 "use server";
 
-import { PredictionData } from "../page";
+import { PredictionData } from "../types/financialData";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "";
 export async function GenerateResponse(
