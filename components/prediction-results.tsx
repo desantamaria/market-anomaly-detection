@@ -1,4 +1,4 @@
-import { PredictionResult } from "@/app/page";
+import { PredictionResult } from "@/app/types/financialData";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 
 export function PredictionResults({ results }: { results: PredictionResult }) {

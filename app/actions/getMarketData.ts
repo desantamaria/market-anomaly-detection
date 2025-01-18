@@ -1,5 +1,6 @@
 "use server";
-import { PredictionData } from "../page";
+
+import { PredictionData } from "../types/financialData";
 
 const RENDER_URL = process.env.NEXT_PUBLIC_RENDER_URL || "";
 
