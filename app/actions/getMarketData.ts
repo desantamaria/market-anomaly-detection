@@ -1,23 +1,16 @@
 "use server";
 import { PredictionData } from "../page";
 
+const RENDER_URL = process.env.NEXT_PUBLIC_RENDER_URL || "";
+
 export async function getMarketData() {
   try {
-    // Get the base URL from the environment or construct it for production
-    const baseUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000";
-
-    const url = new URL("/api/py/getMarketData", baseUrl).toString();
-
-    const response = await fetch(url, {
+    const response = await fetch(`${RENDER_URL}/getMarketData`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-      cache: "no-store",
     });
-
     if (!response.ok) {
       console.error(`API Error: ${response.status} - ${response.statusText}`);
       throw new Error(`HTTP error with status: ${response.status}`);
@@ -30,11 +23,10 @@ export async function getMarketData() {
     throw error;
   }
 }
-const RENDER_URL = process.env.NEXT_PUBLIC_RENDER_URL || "";
 
 export async function getPrediction(financialData: PredictionData) {
   try {
-    const response = await fetch(RENDER_URL, {
+    const response = await fetch(`${RENDER_URL}/predict`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,11 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import yfinance as yf
-from typing import Dict, Any
-import os
-from dotenv import load_dotenv
 
-load_dotenv()
 
 app = FastAPI(docs_url="/api/py/docs", openapi_url="/api/py/openapi.json")
 
