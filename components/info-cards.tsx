@@ -2,12 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface TickerData {
-  date: string;
-  price: number;
-  MA: number;
-}
-
 export function InfoCards({ stockInfo }: { stockInfo: Record<string, any> }) {
   const date = stockInfo.Date;
   return (

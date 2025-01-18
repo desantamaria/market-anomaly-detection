@@ -9,47 +9,7 @@ import { GenerateResponse } from "./actions/generate";
 import Markdown from "react-markdown";
 import { PredictionResults } from "@/components/prediction-results";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
-interface Ticker {
-  date: string;
-  price: number;
-  MA: number;
-}
-
-export interface FinancialData {
-  DXY: Ticker[];
-  GBP: Ticker[];
-  JPY: Ticker[];
-  MXCN: Ticker[];
-  MXEU: Ticker[];
-  VIX: Ticker[];
-  dates: string[];
-}
-
-export interface PredictionData {
-  Date: string;
-  DXY: number;
-  GBP: number;
-  JPY: number;
-  MXCN: number;
-  MXEU: number;
-  VIX: number;
-  VIX_MA: number;
-  DXY_MA: number;
-  JPY_MA: number;
-  GBP_MA: number;
-  MXEU_MA: number;
-  MXCN_MA: number;
-}
-
-export interface PredictionResult {
-  prediction: {
-    XGBoost: number;
-    "Logistic Regression": number;
-    "Isolation Forest": number;
-  };
-  probability: { XGBoost: number };
-}
+import { FinancialData, PredictionData } from "./types/financialData";
 
 export default function Home() {
   const [yFinanceData, setYFinanceData] = useState<FinancialData | null>(null);
@@ -104,6 +64,8 @@ export default function Home() {
     setPredictionResults(result);
 
     const analysis = await GenerateResponse(stocksInfo, selectedDate, result);
+
+    console.log(analysis.result);
 
     setPredictionAnalysis(analysis.result);
 
